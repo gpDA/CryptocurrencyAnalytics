@@ -1,0 +1,450 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js' charset="utf-8"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/addons/p5.dom.js' charset="utf-8"></script>
+    
+    <link rel="stylesheet" href="{% static 'css/index1.css' %}">
+    <!-- PLEASE ALSO ADD SELECT>PNG IN STATIC -->
+    
+
+    <title>Senti Stat</title>
+</head>
+<body>
+
+        <div class='title'><img src="{% static 'title.png' %}" id='title'></div>
+        <div class="panel">
+            <div class="panel-header">
+              <div class="group style">
+                <span class="widget">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26" height="26">
+                    <path d="M16 3v3h-2v12h2v5h1v-5h2V6h-2V3h-1zM9 4v5H7v11h2v3h1v-3h2V9h-2V4H9zm-1 6h3v9H8v-9z"></path>
+                  </svg>
+                </span>
+                <span class="submenu"><i></i></span>
+              </div>
+              <div class="group indicator">
+                <span class="text">Indicator</span>
+                <span class="submenu" ><i></i></span>
+              </div>
+              <div class="group right">
+                <!-- <span class="iconed fullscreen">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 586.09999 586.09996" width="18" height="18" enable-background="new 0 0 595.3 841.9"><path d="M172.6 367.9l-97.7 97.7L0 390.7v195.4h195.4l-74.9-74.9 97.7-97.7-45.6-45.6zM195.4 0H0v195.4l74.9-74.9 97.7 97.7 45.6-45.6-97.7-97.7L195.4 0zm195.3 0l74.9 74.9-97.7 97.7 45.6 45.6 97.7-97.7 74.9 74.9V0H390.7zm22.8 367.9l-45.6 45.6 97.7 97.7-74.9 74.9h195.4V390.7l-74.9 74.9-97.7-97.7z"></path></svg>
+                </span> -->
+              </div>
+            </div>
+            <div class="panel-legend">
+              <div class="panel-value">
+                <span class="panel-value-item-wrap">Open<span class="panel-value-item open"></span></span>
+                <span class="panel-value-item-wrap">High<span class="panel-value-item high"></span></span>
+                <span class="panel-value-item-wrap">Low<span class="panel-value-item low"></span></span>
+                <span class="panel-value-item-wrap">Close<span class="panel-value-item closing"></span></span>
+              </div>
+            </div>
+            <div class="popup" id="style">
+              <a class="item" href="#" key="candles">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26 26" width="26" height="26"><path d="M16 3v3h-2v12h2v5h1v-5h2V6h-2V3h-1zM9 4v5H7v11h2v3h1v-3h2V9h-2V4H9zm-1 6h3v9H8v-9z"></path></svg>
+                <span class="title">Candles</span><span class="shortcut"></span>
+              </a>
+              <a class="item" href="#" key="line">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.3 841.9" enable-background="new 0 0 595.3 841.9" width="26" height="26"><path d="M142.5 447.4c-102.74 102.74-83.44 83.44 0 0m399-186.2l-70.9 94.6H370.1l-136 159.6-91.6-112.3-38.5 41.4L6.5 542l41.4 41.4 94.6-94.6 91.6 112.3 162.6-186.2h103.5l88.7-118.2z"></path></svg>
+                <span class="title">Line</span><span class="shortcut"></span>
+              </a>
+              <a class="item" href="#" key="area">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.3 841.9" enable-background="new 0 0 595.3 841.9" width="26" height="26"><path d="M453.8 360.2l-92.1 6L234 517.7l-86.2-86.1L5.2 514.7v118.9h585.3V268.1z" opacity=".3"></path><path d="M234 508.8c-156 222.067-78 111.033 0 0zm309-276.3l-71.3 95.1h-101L236.9 488l-92.1-112.9-38.6 41.6-101 98.1 41.6 41.6 95.1-95.1L234 574.2 397.4 387h104l89.1-118.9z"></path></svg><span class="title">Area</span></a>
+            </div>
+            <div class="popup" id="indicator">
+             <!--  ["sentibycnn_bitcoin","sentibycnn_blockchain","sentibyft_bitcoin","sentibyft_blockchain","sentibyreuters_bitcoin","sentibyreuters_blockchain","sentibywsj_bitcoin","sentibywsj_blockchain"] -->
+              <a class="item active" href="#" key="sentibycnn_bitcoin">
+                <span class="title"></span>CNN Bitcoin<span class="shortcut"></span>
+              </a>
+              <a class="item " href="#" key="sentibycnn_blockchain">
+                <span class="title">CNN BlockChain</span><span class="shortcut"></span>
+              </a>
+              <a class="item active" href="#" key="sentibyft_bitcoin">
+                <span class="title">FT Bitcoin</span><span class="shortcut"></span>
+              </a>
+              <a class="item " href="#" key="sentibyft_blockchain">
+                <span class="title">FT BlockChain</span><span class="shortcut"></span>
+              </a>
+              <a class="item active" href="#" key="sentibyreuters_bitcoin">
+                <span class="title"></span>Reuters Bitcoin<span class="shortcut"></span>
+              </a>
+              <a class="item" href="#" key="sentibyreuters_blockchain">
+                <span class="title">Reuters BlockChain</span><span class="shortcut"></span>
+              </a>
+              <a class="item active" href="#" key="sentibywsj_bitcoin">
+                <span class="title">WSJ Bitcoin</span><span class="shortcut"></span>
+              </a>
+              <a class="item" href="#" key="sentibywsj_blockchain">
+                <span class="title">WSJ BlockChain</span><span class="shortcut"></span>
+              </a>
+            </div>
+            <div class="senti-value">
+                <span class="senti-value-item-wrap">Average<span class="panel-value-item average"></span></span>
+                <span class="senti-value-item-wrap">Recent<span class="panel-value-item recent"></span></span>
+                
+              </div>
+            <div class="panel-main" id="chart"></div>
+          </div>        
+
+
+      <!-- <div class="form-group row">
+        <div class="col-10">
+          <input class="form-control" type="date" value="2017-12-09" id="date-input">
+        </div>
+      </div> -->
+    <div id='container' ></div>
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+    <script type="text/javascript">
+        var article_url = '/news-endpoint';
+
+        function dateChange(e){
+            alert(e.target.value);            
+            
+        }
+        
+        var has_data = false;
+        function update_data(){
+            
+           $('#container').empty();
+            $( "#article-wrapper" ).remove();
+
+            
+            // selected_date = this.value;
+            var loader = $("<div class='loader'></div>");
+            loader.show();
+            $('#container').append(loader);
+            
+            $.when(
+            
+            $.getJSON(article_url),
+            // $.getJSON(price_url) , price_data
+            )
+            .done(function(article_data) {
+                loader.hide();
+            
+            $.each(article_data, function(i, item) {
+                // new Date(oldDate.toDateString());yourDate
+                var date1 = new Date(article_data[i].published_time);
+                // console.log(typeof(date1));
+
+                if(date1.toISOString().split('T')[0] == selected_date){
+                
+                var article_wrapper = $('#article-wrapper');
+                
+                var article_wrapper = $("<div id='article-wrapper'></div>");
+                var icons = $("<span id='icons'></span>");
+                var article = $("<a class='articles'><div id='article'></div></a>");
+                //<a> _blank
+                article.attr("href", article_data[i].article_url);
+                article.attr("target", "_blank");
+                if (article_data[i].sentiment_number<0){
+                     article.attr("style", "color:rgba(208,16,76)");
+                }
+                else{
+                    article.attr("style", "color:rgba(0,137,108)");
+                }           
+                article.attr('senti',article_data[i].sentiment_number);
+                var source = $("<span id='source'></span>");
+
+
+
+                var sentiment
+
+                if (article_data[i].sentiment_result == 'negative'){
+                    sentiment = '<i class="fas fa-minus"></i>';
+                }else if( article_data[i].sentiment_result == 'positive'){
+                    sentiment = '<i class="fas fa-plus"></i>';
+                }
+                var iicons = icons.append(sentiment)
+                var aarticles = article.html(article_data[i].title);
+                ssources = source.html(article_data[i].source);
+
+                article_wrapper.append(ssources).append(aarticles);
+                
+                $('#container').append(article_wrapper);
+                has_data = true; // 02-06-2017
+
+            }
+            })
+
+            
+             
+            if (!has_data){
+                $('#container').append('<p id="noshow"> there\'s no article to show on the day </p>');                
+            }   
+
+        }
+        )
+        .fail(function () { window.location = "error"; }); 
+        }
+        $('#chart').on('click', function() {
+            update_data();    
+
+            
+            });
+
+    // var senti_url = '/news-endpoint';
+
+  d3.json("/sentiment-endpoint", function(data) {
+    var height = $("body").height()*0.6 - $(".panel-header").height() - 20,
+        width  = $("body").width()*0.6 - 10,
+        stock = d3.stock();
+
+    var chart = d3.select("#chart").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .attr('class', 'chart')
+        .attr('id','stockchart')
+        .datum(data)
+    var panel1 = stock(chart);
+
+
+    // price
+    printPrice1(data.list[data.list.length-1]);
+
+    // menu
+    $(".style").click(function(e){
+        $("#style").css({
+            top: "36px",
+            left: $(".style").offset().left,
+            right: "auto",
+            display: "block",
+        });
+
+        $(document).one("click", function(){
+            $("#style").css({display: "none"});
+        });
+        e.stopPropagation();
+    });
+
+    $("#style a").click(function(){
+        $(".style .widget").html($(this).find("svg").prop("outerHTML"));
+        panel1.style($(this).attr("key")).drawPrice();
+    });
+
+    $(".indicator").click(function(e){
+        $("#indicator").css({
+            top: "36px",
+            left: $(".indicator").offset().left,
+            right: "auto",
+            display: "block",
+        });
+
+
+        $(document).one("click", function(){
+            $("#indicator").css({display: "none"});
+        });
+        e.stopPropagation();
+    });
+
+    $("#indicator a").click(function(){
+        // panel1.indicator($(this).attr("key"));
+
+    });
+
+    $("#stockchart").on("mousemove", function(){
+        var focus = panel1.focus();
+        printPrice1(focus);
+    })
+
+    $(window).resize(function(){
+       // height = $("body").height()*0.6 - $(".panel-header").height() - 20;
+        width  = $("body").width()*0.6 - 10;
+        stock.width(width).height(height).redraw();
+    })
+
+    function printPrice1(focus) {
+      var color = focus.open > focus.close ? "red": "green";
+      $(".high").css("color", color).html(Math.round(focus.high));
+      $(".low").css("color", color).html(Math.round(focus.low));
+      $(".open").css("color", color).html(Math.round(focus.open));
+      $(".closing").css("color", color).html(Math.round(focus.close));
+    }
+  });
+
+
+  d3.json("/sentiment-endpoint", function(data) {
+    var height = $("body").height()*0.6 - $(".panel-header").height() - 20,
+        width  = $("body").width()*0.6 - 10,
+        senti = d3.senti();
+
+
+    var sentichart = d3.select("#chart").append("svg")
+        .attr("width", width)
+        .attr("height", height*0.3)
+        .attr('class', 'chart')
+        .attr('id','sentichart')
+        .datum(data)
+
+    var panel2 = senti(sentichart);
+
+    // price
+   
+
+    // menu
+    $(".style").click(function(e){
+        $("#style").css({
+            top: "36px",
+            left: $(".style").offset().left,
+            right: "auto",
+            display: "block",
+        });
+
+        $(document).one("click", function(){
+            $("#style").css({display: "none"});
+        });
+        e.stopPropagation();
+    });
+
+    $("#style a").click(function(){
+        $(".style .widget").html($(this).find("svg").prop("outerHTML"));
+        panel2.style($(this).attr("key")).drawPrice();
+    });
+
+    $(".indicator").click(function(e){
+        $("#indicator").css({
+            top: "36px",
+            left: $(".indicator").offset().left,
+            right: "auto",
+            display: "block",
+        });
+
+
+        $(document).one("click", function(){
+            $("#indicator").css({display: "none"});
+        });
+        e.stopPropagation();
+    });
+
+    $("#indicator a").click(function(){
+        panel2.indicator($(this).attr("key"));
+    });
+
+    $("#sentichart").on("mousemove", function(){
+        var focus = panel2.focus();
+        printPrice2(focus);
+    })
+    function printPrice2(focus) {
+      var color = focus.open > focus.close ? "red": "green";
+      $(".high").css("color", color).html(Math.round(focus.high));
+      $(".low").css("color", color).html(Math.round(focus.low));
+      $(".open").css("color", color).html(Math.round(focus.open));
+      $(".closing").css("color", color).html(Math.round(focus.close));
+    }
+
+    $(window).resize(function(){
+       // height = $("body").height()*0.6 - $(".panel-header").height() - 20;
+       width  = $("body").width()*0.6 - 10;
+        senti.width(width).height(height).redraw();
+    })
+
+  });
+
+
+  d3.json("/sentiment-endpoint", function (data) {
+
+    var height = $("body").height()*0.6 - $(".panel-header").height() - 20,
+        width  = $("body").width()*0.6 - 10;
+        
+ 
+    // function tabulate(data, columns) {
+    //   var table = d3.select('body').append('table').attr('id','newstable')
+    //   var thead = table.append('thead')
+    //   var tbody = table.append('tbody');
+
+    //   // append the header row
+    //   thead.append('tr')
+    //     .selectAll('th')
+    //     .data(columns).enter()
+    //     .append('th')
+    //       .text(function (column) { return column; });
+
+    //   // create a row for each object in the data
+    //   var rows = tbody.selectAll('tr')
+    //     .data(data)
+    //     .enter()
+    //     .append('tr');
+
+    //   // create a cell in each row for each column
+    //   var cells = rows.selectAll('td')
+    //     .data(function (row) {
+
+    //       return columns.map(function (column) {
+    //       //  console.log(typeof row[column]);
+    //         return {column: column, value: row[column]};
+    //       });
+    //     })
+    //     .enter()
+    //     .append('td')
+    //       .text(function (d) { return d.value; });
+
+    //   return table;
+    // }
+
+    // render the table(s)
+    // tabulate(data.list.slice(i0,10), ['open', 'close','high','low','time']); // 2 column table
+
+  });
+    
+
+//   $('#chart').click(function(){
+//     console.log(selected_date);
+//     set_icon(round(random(10,20)));
+
+
+//   })
+
+ 
+  $('#chart').mouseover(function(){
+    if(selected_date.length>=1){
+      document.getElementById("chart").style.cursor = "pointer";
+    }else{
+      document.getElementById("chart").style.cursor = "auto";
+    }
+    
+
+  })            
+    </script>    
+
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/p5.sound.min.js' %}"></script>
+    <script src="{% static 'js/p5.min.js' %}"></script>
+    <script src="{% static 'js/p5.dom.min.js' %}"></script>
+    <script src="{% static 'js/sketch.js' %}"></script>
+    <script src="{% static 'js/stock.js' %}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+    {% block scripts %}
+    
+    {% endblock %}        
+
+    <html>
+<head>
+
+
+<body>
+<div id="output"></div>
+</body>
+</html>

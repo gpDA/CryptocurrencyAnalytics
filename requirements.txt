@@ -1,0 +1,10 @@
+django
+django-mysql
+# PyMySQL
+mysql
+mysqlclient
+djangorestframework
+# python manage.py collectstatic
+
+#https://docs.djangoproject.com/en/2.1/howto/legacy-databases/
+#inspectdb

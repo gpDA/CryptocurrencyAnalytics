@@ -1,0 +1,344 @@
+html,body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: 13px;
+}
+html {
+    overflow-x: hidden;  
+    overflow-y: hidden;
+    /* background-color: #F1F3F6; */
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+a {text-decoration: none;}
+.right {float:right;}
+svg line, svg rect {
+    shape-rendering: crispEdges;
+}
+.panel-header {
+    position: fixed;
+    top:16%;
+    left:3%;
+}
+.panel-header .group {
+
+    display: inline-block;
+    white-space: nowrap;
+
+    padding: 0;
+    font-size: 0;
+    vertical-align: top;
+}
+.panel-header span{
+    display: inline-block;
+    height: 28px;
+    position: relative;
+    vertical-align: top;
+    color: #524f4f;
+    font-size: 13px;
+    font-weight: bold;
+    background: #fff;
+    border: 1px solid #c9cbcd;
+    padding: 1px 8px 13px;
+    cursor: default;
+}
+.panel-header span:hover {
+    border-color: #A9A9A9;
+}
+.panel-header .text {
+    font-weight: 600;
+    padding: 5px 10px 5px;
+}
+.panel-header .iconed {
+    padding: 6px 8px 8px;
+}
+.panel-header .submenu {
+    padding: 0;
+    width: 20px;
+    height: 28px;
+    border-left: none;
+    
+}
+.panel-header .submenu i {
+    display: block;
+    width: 9px;
+    height: 5px;
+    position: absolute;
+    top: 12px;
+    right: 6px;
+    background: url('/static/select.png');
+    /*background-image: url("{% static 'select.png' %}");*/
+}
+.panel-header svg {
+    fill: #7D7D7D;
+}
+.panel .mouse-overlay {
+    opacity: 0;
+}
+.panel-legend {
+    top: 21%;
+    left: 4%;
+    z-index: 3;
+    position: absolute;
+    
+    right: 5px;
+    margin: 0;
+    padding: 0;
+    color: #444;
+    line-height: normal;
+    white-space: nowrap;
+    pointer-events: none;
+    border: 0;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+.panel-legend .panel-value-item {
+    padding: 0 3px;
+}
+.panel-main {
+    padding: 5px;
+}
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+}
+
+
+.senti-value{
+     
+     position:fixed;
+     top:76%;
+     left:4%; 
+    z-index: 3;
+    position: absolute;
+    
+    right: 5px;
+    margin: 0;
+    padding: 5px;
+    color: #444;
+    line-height: normal;
+    white-space: nowrap;
+    pointer-events: none;
+    border: 0;
+    box-sizing: border-box;
+    background-color: transparent;
+}
+
+.chart {
+    background-color:#FFFFFF;
+    border: solid  1px;
+    border-color:rgba(220,220,220,.9) ;
+    border-radius: 10px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+}
+
+.chart .axis line, .chart .axis path {
+    stroke-width: 1;
+    fill: none;
+    stroke: rgba(189,195,205,.4);
+    shape-rendering: crispEdges;
+}
+.chart text {
+    font: 400 13px Helvetica,Arial,sans-serif;
+    fill: #333;
+}
+.chart .tick text {
+    font-size: 11px;
+}
+.chart text.label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.popup {
+    display: none;
+    overflow: auto;
+    width: 150px;
+    right: 7px;
+    top: 46px;
+    z-index: 50;
+    position: absolute;
+    border: 1px solid #aaadb1;
+    background: #fff;
+    z-index: 120;
+    margin: 0;
+}
+.popup .item {
+    display: block;
+    padding: 5px 7px 0 7px;
+    height: 30px;
+    position: relative;
+}
+.popup .item:hover, .popup .item.active {
+    background: #2ea9df;
+    color:white;
+}
+.popup .item .title {
+    width: 120px;
+    /*color: #595959;*/
+    vertical-align: top;
+    line-height: 25px;
+    padding-left: 5px;
+}
+.popup .item svg {
+    fill: #7d7d7d;
+}
+
+#stockchart{
+position:fixed;
+left:3%;
+top:20%;
+}
+
+#sentichart{
+position:fixed;
+left:3%;
+top:75%;
+}
+
+#title{
+display: block;
+/*position:fixed;*/
+margin-left: auto;
+margin-right: auto;
+width:30%;
+}
+
+#newstable{
+position:fixed;
+left:65%;
+top:20%;
+
+}
+
+table {
+border-collapse: collapse;
+}
+
+table, th, td {
+border: 1px solid black;
+}
+
+#chart:hover{
+
+
+}
+
+td, th {
+padding: 1px 4px;
+}        
+.loader {
+border: 16px solid #f3f3f3;
+margin: 0 auto;
+margin-top: 8em;
+border-radius: 50%;
+border-top: 16px solid #3498db;
+width: 120px;
+height: 120px;
+-webkit-animation: spin 2s linear infinite; /* Safari */
+animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+0% { -webkit-transform: rotate(0deg); }
+100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+0% { transform: rotate(0deg); }
+100% { transform: rotate(360deg); }
+}        
+#container {
+    position:fixed;
+    right:1%;
+    top:20%;
+    -webkit-box-shadow: 0 8px 6px -6px black;
+    -moz-box-shadow: 0 8px 6px -6px black;
+    box-shadow: 0 8px 6px -6px black;
+    height: 71%;
+    width: 35%;
+    /*  */
+    padding: 12px;
+    /*  */
+    border: 2px solid;
+    border-color:rgba(220,220,220,.9) ;
+    border-radius: 10px;
+    background-color:rgba(250,250,250,0.9) ;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+ 
+    
+    
+}
+#article-wrapper {
+    min-height: 6em;
+    border-radius: 10px;
+    padding: 20px;
+    overflow: hidden;
+    color: #d3d3d3;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical; 
+    background-color: rgba(220,220,220);
+    margin-bottom: 1em;
+}    
+span#icons{
+    padding: 2px 15px;
+    border-radius: 5px;
+    background-color: white;
+    position: relative;
+    margin-right: 1em;
+}
+.fa-plus{
+    color: blue;
+}
+.fa-minus{
+    color: red;
+}
+#source{
+    margin-right:5px;
+    padding: 2px 15px;
+    border-radius: 5px;
+    background-color: rgba(200,200,200);
+    position: relative;
+    color: black;
+    border: 2px solid;        
+    border-color:  rgba(240,240,240);  
+}
+p#noshow {
+    font-size: 3em;
+    font-weight: bold;
+    /* font-family: bold; */
+    padding-top: 4em;
+    color: black;
+}
+a {
+    /*color: white;*/
+    font-size: 15px;
+}
+a:hover{
+    cursor: pointer;
+   
+    text-decoration: none;
+}
+
+
+.articles{
+    color:black;
+}
+
+.articles:hover{
+    color: rgba(100,100,100);
+}
