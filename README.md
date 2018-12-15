@@ -9,14 +9,16 @@
 
 `python manage.py runserver`
 
+
 ### Links for collecting the data process
 
+* [Brief Report]
+(http://35.199.9.158:8888/notebooks/Final%20Project/Brief%20Report_Senti_Data.ipynb)
+
+### Links for collecting the data process
 
 * [Final project_news_combined]
 (http://35.199.9.158:8888/notebooks/Final%20Project/final%20project_news_combined.ipynb)
-
-* `[Brief Report]`
-(http://35.199.9.158:8888/notebooks/Final%20Project/Brief%20Report_Senti_Data.ipynb)
 
 * [Final_project_news_extracting_wsj]
 (http://35.199.9.158:8888/notebooks/Final%20Project/final_project_news_extracting_wsj.ipynb)
