@@ -1,5 +1,7 @@
 # senti_stat
 
+Video Demo : 
+
 ### How to run the application
 `source ./bin/activate`
 
