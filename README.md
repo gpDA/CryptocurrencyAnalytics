@@ -1,7 +1,18 @@
-# senti_stat
+# Cryptocurrency Analytics
 
-Presentation : https://docs.google.com/presentation/d/1o6JStssLdz5qJhE6Ai91-WeJJ96nfQC3qE2nHmBFuWs/edit?usp=sharing
-Video Demo : 
+### Objectives
+
+It is hard to what causes the price fluctuation in Cryptocurrency market. In this project, we did following to help people to find the relevant articles along with the Cryptocurrency exchange pricing graph
+1. Datamining across numerous cryptocurrency exchanges globally
+2. Sentiment anlalysis on historical data sources using Watson API
+3. Interactive display of sentiment analysis and news articles
+
+
+
+
+* Presentation : https://docs.google.com/presentation/d/1o6JStssLdz5qJhE6Ai91-WeJJ96nfQC3qE2nHmBFuWs/edit?usp=sharing
+
+* Video Demo : https://www.youtube.com/watch?v=Ilxd3UvqL6U&feature=youtu.be
 
 ### How to run the application
 `source ./bin/activate`
