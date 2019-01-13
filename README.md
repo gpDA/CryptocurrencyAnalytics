@@ -1,5 +1,6 @@
 # senti_stat
 
+Presentation : https://docs.google.com/presentation/d/1o6JStssLdz5qJhE6Ai91-WeJJ96nfQC3qE2nHmBFuWs/edit?usp=sharing
 Video Demo : 
 
 ### How to run the application
