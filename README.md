@@ -2,7 +2,7 @@
 
 ### Objectives
 
-It is sometimes hard to find what causes the price changes in Cryptocurrency market. In this project, we did following steps to help people to find the relevant articles along with the Cryptocurrency exchange pricing graph so that people can find the what has caused the price changes by reading relevant articles on the day
+It is sometimes hard to find what causes the price changes in Cryptocurrency market. In this project, we did following steps to help people to find reasonings behind the price changes by showing relevant articles on a certain day.
 
 1. Datamining across numerous cryptocurrency exchanges globally
 2. Sentiment anlalysis on historical data sources using Watson API
