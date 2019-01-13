@@ -2,7 +2,8 @@
 
 ### Objectives
 
-It is hard to what causes the price fluctuation in Cryptocurrency market. In this project, we did following to help people to find the relevant articles along with the Cryptocurrency exchange pricing graph
+It is sometimes hard to find what causes the price fluctuation in Cryptocurrency market. In this project, we did following steps to help people to find the relevant articles along with the Cryptocurrency exchange pricing graph so that people can find the what has caused the price changes by reading relevant articles on the day
+
 1. Datamining across numerous cryptocurrency exchanges globally
 2. Sentiment anlalysis on historical data sources using Watson API
 3. Interactive display of sentiment analysis and news articles
