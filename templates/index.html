@@ -86,6 +86,8 @@
                 <span class="title">WSJ BlockChain</span><span class="shortcut"></span>
               </a>
             </div>
+
+
             <div class="senti-value">
                 <span class="senti-value-item-wrap">Average<span class="panel-value-item average"></span></span>
                 <span class="senti-value-item-wrap">Recent<span class="panel-value-item recent"></span></span>
@@ -104,36 +106,40 @@
 
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
 
     <script type="text/javascript">
+        // endpoint
         var article_url = '/news-endpoint';
 
         function dateChange(e){
-            alert(e.target.value);            
+            // alert(e.target.value);            
             
         }
         
         var has_data = false;
         function update_data(){
             
+            // empty previous contents
            $('#container').empty();
             $( "#article-wrapper" ).remove();
 
-            
-            // selected_date = this.value;
+            // loading html (from css)
             var loader = $("<div class='loader'></div>");
             loader.show();
             $('#container').append(loader);
             
+            // resolved Promise
             $.when(
-            
+            // get data from article end points
             $.getJSON(article_url),
+            // console.loging
             // $.getJSON(price_url) , price_data
             )
+            // Then Proimse
             .done(function(article_data) {
+                // hide the loder
                 loader.hide();
             
             $.each(article_data, function(i, item) {

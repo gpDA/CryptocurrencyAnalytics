@@ -1,10 +1,16 @@
 django
 django-mysql
-# PyMySQL
-mysql
-mysqlclient
 djangorestframework
+
+
+# PyMySQL
+# mysql
+# mysqlclient
+
 # python manage.py collectstatic
 
 #https://docs.djangoproject.com/en/2.1/howto/legacy-databases/
 #inspectdb
+
+# python3 -m venv crypto
+# source crypto/bin/activate
