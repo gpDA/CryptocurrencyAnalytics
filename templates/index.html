@@ -59,6 +59,8 @@
               <a class="item" href="#" key="area">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 595.3 841.9" enable-background="new 0 0 595.3 841.9" width="26" height="26"><path d="M453.8 360.2l-92.1 6L234 517.7l-86.2-86.1L5.2 514.7v118.9h585.3V268.1z" opacity=".3"></path><path d="M234 508.8c-156 222.067-78 111.033 0 0zm309-276.3l-71.3 95.1h-101L236.9 488l-92.1-112.9-38.6 41.6-101 98.1 41.6 41.6 95.1-95.1L234 574.2 397.4 387h104l89.1-118.9z"></path></svg><span class="title">Area</span></a>
             </div>
+
+            <!-- indicator -->
             <div class="popup" id="indicator">
              <!--  ["sentibycnn_bitcoin","sentibycnn_blockchain","sentibyft_bitcoin","sentibyft_blockchain","sentibyreuters_bitcoin","sentibyreuters_blockchain","sentibywsj_bitcoin","sentibywsj_blockchain"] -->
               <a class="item active" href="#" key="sentibycnn_bitcoin">
@@ -88,6 +90,7 @@
             </div>
 
 
+            <!-- sentiment values -->
             <div class="senti-value">
                 <span class="senti-value-item-wrap">Average<span class="panel-value-item average"></span></span>
                 <span class="senti-value-item-wrap">Recent<span class="panel-value-item recent"></span></span>
@@ -97,11 +100,7 @@
           </div>        
 
 
-      <!-- <div class="form-group row">
-        <div class="col-10">
-          <input class="form-control" type="date" value="2017-12-09" id="date-input">
-        </div>
-      </div> -->
+    <!-- Where Sentiment analalyzed data is shown -->
     <div id='container' ></div>
 
 
@@ -110,14 +109,18 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
 
     <script type="text/javascript">
+
+        // TODO: 1. Sentiment Analyzed Articles
+
         // endpoint
         var article_url = '/news-endpoint';
 
         function dateChange(e){
             // alert(e.target.value);            
-            
         }
         
+        // falsy ... check if the data is parsed correctly
+
         var has_data = false;
         function update_data(){
             
@@ -137,92 +140,112 @@
             // console.loging
             // $.getJSON(price_url) , price_data
             )
-            // Then Proimse
+            // SUCCESS PROMISE
             .done(function(article_data) {
                 // hide the loder
                 loader.hide();
             
+            // i ==> index // item ==> data
             $.each(article_data, function(i, item) {
-                // new Date(oldDate.toDateString());yourDate
+                
+                // published_time
                 var date1 = new Date(article_data[i].published_time);
-                // console.log(typeof(date1));
-
+                
+                // convert from ISO format (Wed Oct 05 2011 16:48:00 GMT+0200 (CEST))
+                // to simplified format (2011-10-05)
+                // If user has chosen the certain data... bring data on the corresponding date
                 if(date1.toISOString().split('T')[0] == selected_date){
+                
                 
                 var article_wrapper = $('#article-wrapper');
                 
                 var article_wrapper = $("<div id='article-wrapper'></div>");
                 var icons = $("<span id='icons'></span>");
                 var article = $("<a class='articles'><div id='article'></div></a>");
-                //<a> _blank
+                
+                // LINK article url
                 article.attr("href", article_data[i].article_url);
+                //<a> _blank IN a new page
                 article.attr("target", "_blank");
+                // If the sentiment number is negative, RED
                 if (article_data[i].sentiment_number<0){
                      article.attr("style", "color:rgba(208,16,76)");
                 }
+                // If the sentiment number is negative, GREEN
                 else{
                     article.attr("style", "color:rgba(0,137,108)");
-                }           
-                article.attr('senti',article_data[i].sentiment_number);
-                var source = $("<span id='source'></span>");
-
-
-
-                var sentiment
-
-                if (article_data[i].sentiment_result == 'negative'){
-                    sentiment = '<i class="fas fa-minus"></i>';
-                }else if( article_data[i].sentiment_result == 'positive'){
-                    sentiment = '<i class="fas fa-plus"></i>';
                 }
-                var iicons = icons.append(sentiment)
-                var aarticles = article.html(article_data[i].title);
-                ssources = source.html(article_data[i].source);
 
+                // article.attr('senti',article_data[i].sentiment_number);
+                
+                var source = $("<span id='source'></span>");
+                // title
+                var aarticles = article.html(article_data[i].title);
+                // news source
+                ssources = source.html(article_data[i].source);
+                // append to the wrapper
                 article_wrapper.append(ssources).append(aarticles);
                 
+                // append to the empty id="container"
                 $('#container').append(article_wrapper);
+                // falsy --> truthy
                 has_data = true; // 02-06-2017
 
             }
             })
 
-            
-             
+            // if no Data on the selected date, append "NO ARTICLE"
             if (!has_data){
                 $('#container').append('<p id="noshow"> there\'s no article to show on the day </p>');                
             }   
 
-        }
+            }
         )
+        // FAILED PROMISE... relocate to error HTML
         .fail(function () { window.location = "error"; }); 
         }
+
+        // click on Chart update function... 
         $('#chart').on('click', function() {
             update_data();    
 
             
-            });
+        });
 
     // var senti_url = '/news-endpoint';
 
+    // TODO: 2. Pricing Graphs
+
+  // get data from endpoint in json format
   d3.json("/sentiment-endpoint", function(data) {
+    //   width & height
     var height = $("body").height()*0.6 - $(".panel-header").height() - 20,
         width  = $("body").width()*0.6 - 10,
+        // d3.stock
         stock = d3.stock();
 
+    // options ... attribute
+
+    // background d3
+    // draw image by its shape... background // d3 chart
     var chart = d3.select("#chart").append("svg")
         .attr("width", width)
         .attr("height", height)
         .attr('class', 'chart')
+        // id stockchart
         .attr('id','stockchart')
+        // datum attribute data
         .datum(data)
+
+    // make stock price
     var panel1 = stock(chart);
 
+    // function printPrice1
 
-    // price
+    // x-ticks
     printPrice1(data.list[data.list.length-1]);
 
-    // menu
+    // styling
     $(".style").click(function(e){
         $("#style").css({
             top: "36px",
@@ -237,11 +260,15 @@
         e.stopPropagation();
     });
 
+    // drawPrice
     $("#style a").click(function(){
+        // choose which one to draw
+        // outerHTML is the HTML of an element includiong the element itself
         $(".style .widget").html($(this).find("svg").prop("outerHTML"));
         panel1.style($(this).attr("key")).drawPrice();
     });
 
+    // indicator located on the top of the chart Click event
     $(".indicator").click(function(e){
         $("#indicator").css({
             top: "36px",
@@ -257,22 +284,20 @@
         e.stopPropagation();
     });
 
-    $("#indicator a").click(function(){
-        // panel1.indicator($(this).attr("key"));
-
-    });
-
+    // movemove Event on chart Print price on the bottom
     $("#stockchart").on("mousemove", function(){
         var focus = panel1.focus();
         printPrice1(focus);
     })
 
+    // handling with resizing with redraw()
     $(window).resize(function(){
-       // height = $("body").height()*0.6 - $(".panel-header").height() - 20;
         width  = $("body").width()*0.6 - 10;
         stock.width(width).height(height).redraw();
     })
 
+
+    // print Price and show the volumes
     function printPrice1(focus) {
       var color = focus.open > focus.close ? "red": "green";
       $(".high").css("color", color).html(Math.round(focus.high));
@@ -283,6 +308,9 @@
   });
 
 
+    // TODO: 2. Sentiment Graphs
+
+  // sentiment Chart located on the bottom of Chart
   d3.json("/sentiment-endpoint", function(data) {
     var height = $("body").height()*0.6 - $(".panel-header").height() - 20,
         width  = $("body").width()*0.6 - 10,
@@ -317,6 +345,7 @@
     });
 
     $("#style a").click(function(){
+        // properties... innerHTML vs. outerHTML
         $(".style .widget").html($(this).find("svg").prop("outerHTML"));
         panel2.style($(this).attr("key")).drawPrice();
     });
@@ -345,6 +374,8 @@
         printPrice2(focus);
     })
     function printPrice2(focus) {
+        // mountain... valley // up , down...
+
       var color = focus.open > focus.close ? "red": "green";
       $(".high").css("color", color).html(Math.round(focus.high));
       $(".low").css("color", color).html(Math.round(focus.low));
@@ -353,7 +384,6 @@
     }
 
     $(window).resize(function(){
-       // height = $("body").height()*0.6 - $(".panel-header").height() - 20;
        width  = $("body").width()*0.6 - 10;
         senti.width(width).height(height).redraw();
     })
@@ -365,54 +395,6 @@
 
     var height = $("body").height()*0.6 - $(".panel-header").height() - 20,
         width  = $("body").width()*0.6 - 10;
-        
- 
-    // function tabulate(data, columns) {
-    //   var table = d3.select('body').append('table').attr('id','newstable')
-    //   var thead = table.append('thead')
-    //   var tbody = table.append('tbody');
-
-    //   // append the header row
-    //   thead.append('tr')
-    //     .selectAll('th')
-    //     .data(columns).enter()
-    //     .append('th')
-    //       .text(function (column) { return column; });
-
-    //   // create a row for each object in the data
-    //   var rows = tbody.selectAll('tr')
-    //     .data(data)
-    //     .enter()
-    //     .append('tr');
-
-    //   // create a cell in each row for each column
-    //   var cells = rows.selectAll('td')
-    //     .data(function (row) {
-
-    //       return columns.map(function (column) {
-    //       //  console.log(typeof row[column]);
-    //         return {column: column, value: row[column]};
-    //       });
-    //     })
-    //     .enter()
-    //     .append('td')
-    //       .text(function (d) { return d.value; });
-
-    //   return table;
-    // }
-
-    // render the table(s)
-    // tabulate(data.list.slice(i0,10), ['open', 'close','high','low','time']); // 2 column table
-
-  });
-    
-
-//   $('#chart').click(function(){
-//     console.log(selected_date);
-//     set_icon(round(random(10,20)));
-
-
-//   })
 
  
   $('#chart').mouseover(function(){
@@ -426,22 +408,17 @@
   })            
     </script>    
 
+    // stock.js
+    <script src="{% static 'js/stock.js' %}"></script>
+
     <script src="{% static 'js/index.js' %}"></script>
     <script src="{% static 'js/p5.sound.min.js' %}"></script>
     <script src="{% static 'js/p5.min.js' %}"></script>
     <script src="{% static 'js/p5.dom.min.js' %}"></script>
     <script src="{% static 'js/sketch.js' %}"></script>
-    <script src="{% static 'js/stock.js' %}"></script>
+    
 </body>
 </html>
-
-
-
-
-
-
-
-
     {% block scripts %}
     
     {% endblock %}        

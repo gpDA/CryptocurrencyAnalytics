@@ -11,9 +11,10 @@ var avg_senti=0;
 
 
 
-
+// stock FUNCTION
 (function(){
     d3.stock = function() {
+        // Candles
         var source, chartStyle = "candles",
             name = "", symbol = "", data,
             count = 200, days = 0,
@@ -46,6 +47,8 @@ var avg_senti=0;
             margin = {top: 0, right: 50, bottom: 50, left: 0};
            
             
+            // ticks
+
             //var parseDate  = d3.time.format('%a %b %d %X %Z %Y').parse;
             var parseDate  = d3.time.format('%Y-%m-%d %X').parse;
             var formatDate= d3.time.format("%Y-%m-%d");
@@ -53,12 +56,14 @@ var avg_senti=0;
             data = source.list.map(function(d){ d.time = parseDate(d.time); return d;})
             selected_date=formatDate(data[data.length-1].time);
             update_data();
+
             data = source.list.map(function(d){ d.volume = parseFloat(d.volume); return d;})
             data = source.list.map(function(d){ d.open = parseFloat(d.open); return d;})
             data = source.list.map(function(d){ d.close = parseFloat(d.close); return d;})
             data = source.list.map(function(d){ d.high = parseFloat(d.high); return d;})
             data = source.list.map(function(d){ d.low = parseFloat(d.low); return d;})
 
+            // calculate days
             days = (data[length-1].time - data[0].time)/(24*3600*1000);
             
 
@@ -220,6 +225,7 @@ var avg_senti=0;
           focus    = data[i];
           selected_change_of_price=data[i].close/data[i].open;
           selected_senti=data[i].daily_senti_average;
+        //   selected data
           selected_date=stock.formatDate(data[i].time);
           i0=i;
           var posX = x1(i) + 0.45*width/data.length;
@@ -358,6 +364,7 @@ var avg_senti=0;
                .attr('transform', 'translate('+margin.left+', '+margin.top+')');
         }
 
+        // DRAW VOLUME
         stock.drawVolume = function() {
             volumeLayer.selectAll("*").remove();
 
@@ -385,13 +392,15 @@ var avg_senti=0;
                 .attr('transform', 'translate('+ margin.left +',' + (height1+margin.top) + ')')
         }
 
+        // DRAW PRICE
         stock.drawPrice = function() {
             //Remove old ticks.
             priceLayer.selectAll("*").remove();
             var range = end - begin;
 
-            //Price chart.
+            // Price chart.
             switch(chartStyle) {
+                // candles
                 case "candles":
                     priceLayer.selectAll("line.stem")
                         .data(data)
@@ -416,6 +425,7 @@ var avg_senti=0;
                         .attr("stroke-width", 1)
                         .attr('transform', 'translate('+ margin.left +', '+ margin.top +')')
                     break;
+                // line
                 case "line":
                     var priceLine = d3.svg.line()
                         .interpolate("monotone")
@@ -429,6 +439,7 @@ var avg_senti=0;
                         .attr("d", priceLine)
                         .attr('transform', 'translate('+ margin.left +', ' + margin.top +')')
                     break;
+
                 case "area":
                     var priceLine = d3.svg.line()
                         .interpolate("monotone")
@@ -459,6 +470,7 @@ var avg_senti=0;
             stock.drawLastPrice();
         }
 
+        // draw 
         stock.drawLastPrice = function() {
             console.log(current.close);
             var price = priceLayer.append("svg:g")
@@ -548,6 +560,7 @@ var avg_senti=0;
 })();
 
 
+// SENTIMENT GRAPH
 (function(){
     d3.senti = function() {
         var source, chartStyle = "line",
@@ -756,7 +769,7 @@ var avg_senti=0;
           yText.text(y0)
         }
 
-       
+        //  format
         senti.formatDate      = d3.time.format("%Y-%m-%d");
         senti.formatDay       = d3.time.format("%Y-%m-%d");
         senti.formatMonth     = d3.time.format("%m");
@@ -764,7 +777,7 @@ var avg_senti=0;
         senti.formatYear      = d3.time.format("%Y");
         
 
-
+        // setTicks
         senti.setTicks = function() {
             if (days <= 366) {
                 for(i = 1; i < length; i++) {
@@ -782,6 +795,7 @@ var avg_senti=0;
             }
         }
 
+        // tickFormat
         senti.tickFormat = function(t){
             if(days < 1) {
               return senti.formatTime(t);
@@ -793,6 +807,7 @@ var avg_senti=0;
             }
         }
 
+        // initScale
         senti.initScale = function(begin, end) {
             // Scale
             x = d3.scale.linear().range([0, width]).domain([begin, end]);
@@ -874,9 +889,10 @@ var avg_senti=0;
             priceLayer.selectAll("*").remove();
             var range = end - begin;
 
-            //Price chart.
+            // chartStyle
             switch(chartStyle) {
                
+                // line
                 case "line":
                     var priceLine = d3.svg.line()
                         .interpolate("monotone")
@@ -891,6 +907,8 @@ var avg_senti=0;
                         .attr("d", priceLine)
                         .attr('transform', 'translate('+ margin.left +', ' + margin.top +')')
                     break;
+
+                // area
                 case "area":
                     var priceLine = d3.svg.line()
                         .interpolate("monotone")
